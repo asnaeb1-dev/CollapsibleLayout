@@ -29,6 +29,19 @@ public class Accordian  {
         this.duration = duration;
     }
 
+    private int handleTargetHeight(int lh, int pos){
+        switch (pos){
+            case 0:
+            case 1:
+            case 2:
+                return lh - (titleHeight * (pos + 1));
+            case 3:
+                return lh - (titleHeight * (pos ));
+            default:
+                return lh - (titleHeight * (pos + 1));
+        }
+    }
+
     public ViewGroup designLayout(){
         if(children.size() < 2 || children.size() > 4){
             Log.e(ERROR_MESSAGE, "MINIMUM TWO CHILD VIEWS ARE EXPECTED. MAXIMUM 4 CHILD VIEWS ARE SUPPORTED.");
@@ -38,32 +51,39 @@ public class Accordian  {
         LinearLayout linearLayout = new LinearLayout(context);
         linearLayout.setOrientation(LinearLayout.VERTICAL);
         linearLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-
-        children.forEach(layout -> {
+        for (int i = 0; i < children.size(); i++) {
+            ExpandableLinearLayout layout = children.get(i);
+            int finalI = i;
             layout.setOnClickListener(v -> {
                 children.forEach(thisLayout -> {
-                    if(layout!=thisLayout){
-                        if(thisLayout.isExpanded()){
+                    if (layout != thisLayout) {
+                        if (thisLayout.isExpanded()) {
                             thisLayout.collapse(thisLayout, 1000, 300, (view) -> {
+                                thisLayout.removeAllViews();
+                                thisLayout.addView(thisLayout.getCollapsedLayout());
                                 thisLayout.setExpanded(false);
                             });
                         }
                     }
                 });
-                if(!layout.isExpanded()){
-                    layout.expand(v, 1000, 900, (view) -> {
+                if (!layout.isExpanded()) {
+                    layout.expand(v, 1000, handleTargetHeight(linearLayout.getHeight(), finalI), (view) -> {
                         Log.i("STATE", "EXPANDED");
+                        layout.removeAllViews();
+                        layout.addView(layout.getExpandedLayout());
                         layout.setExpanded(true);
                     });
-                }else{
+                } else {
                     layout.collapse(v, 1000, 300, (view) -> {
-                        Log.i("STATE", "EXPANDED");
+                        Log.i("STATE", "COLLAPSED");
+                        layout.removeAllViews();
+                        layout.addView(layout.getCollapsedLayout());
                         layout.setExpanded(false);
                     });
                 }
             });
             linearLayout.addView(layout);
-        });
+        }
         return linearLayout;
     }
 

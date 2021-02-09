@@ -3,16 +3,19 @@ package com.example.expandandcollapse.Custom;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.LinearLayout;
 
 public class ExpandableLinearLayout extends LinearLayout {
 
     private boolean isExpanded;
+    private ViewGroup expandedLayout, collapsedLayout;
 
     public ExpandableLinearLayout(Context context) {
         super(context);
     }
+
 
     public void expand(final View v, int duration, int targetHeight, OnExpandListener expand) {
         int prevHeight  = v.getHeight();
@@ -49,4 +52,21 @@ public class ExpandableLinearLayout extends LinearLayout {
     public void setExpanded(boolean expanded) {
         isExpanded = expanded;
     }
+
+    public ViewGroup getExpandedLayout() {
+        return expandedLayout;
+    }
+
+    public void setExpandedLayout(ViewGroup expandedLayout) {
+        this.expandedLayout = expandedLayout;
+    }
+
+    public ViewGroup getCollapsedLayout() {
+        return collapsedLayout;
+    }
+
+    public void setCollapsedLayout(ViewGroup collapsedLayout) {
+        this.collapsedLayout = collapsedLayout;
+    }
+
 }

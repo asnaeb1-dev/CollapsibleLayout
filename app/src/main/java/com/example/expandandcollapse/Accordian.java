@@ -29,6 +29,7 @@ public class Accordian  {
         this.duration = duration;
     }
 
+    //handles the target height or the height after expansion
     private int handleTargetHeight(int lh, int pos){
         switch (pos){
             case 0:
@@ -42,6 +43,7 @@ public class Accordian  {
         }
     }
 
+    //configures each and every layout and attaches them to a parent linear layout and send the reference back to the caller class
     public ViewGroup designLayout(){
         if(children.size() < 2 || children.size() > 4){
             Log.e(ERROR_MESSAGE, "MINIMUM TWO CHILD VIEWS ARE EXPECTED. MAXIMUM 4 CHILD VIEWS ARE SUPPORTED.");

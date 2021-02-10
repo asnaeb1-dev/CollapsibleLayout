@@ -1,0 +1,18 @@
+This is a library which can be used to develop a collapsing and expanding layout. Minimum 2 and maximum 4 layouts are supported.
+
+How to use:
+
+-->         Accordian accordian = new Accordian(<context>,<list of layouts> {List<ExpandableLinearLayout>}, <title height>{int}, <duration> {int});
+            LinearLayout linearLayout = accordian.designLayout();// returns a linear layout that contains all the list of layouts configured to the needs of the code
+            main.addView(linearLayout);
+
+--> Create a layout:
+                    ExpandableLinearLayout expandableLinearLayout = new ExpandableLinearLayout(<context>);
+                    expandableLinearLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 300));
+                    expandableLinearLayout.setOrientation(LinearLayout.VERTICAL);
+                    expandableLinearLayout.setBackgroundColor(getResources().getColor(android.R.color.holo_purple));
+                    expandableLinearLayout.setCollapsedLayout((ViewGroup) LayoutInflater.from(this).inflate(R.layout.title, null));
+                    expandableLinearLayout.setExpandedLayout((ViewGroup) LayoutInflater.from(this).inflate(R.layout.description, null));
+
+                    OR use LAYOUTINFLATOR
+
